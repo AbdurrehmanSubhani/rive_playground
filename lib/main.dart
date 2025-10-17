@@ -4,12 +4,23 @@ import 'package:rive_playground/app/app.dialogs.dart';
 import 'package:rive_playground/app/app.locator.dart';
 import 'package:rive_playground/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:rive/rive.dart';
+
+Future<void> initServices() async {
+  try {
+    await setupLocator();
+    setupDialogUi();
+    setupBottomSheetUi();
+    await RiveNative.init();
+  } catch (e) {
+    print('Error initializing services: $e');
+    rethrow;
+  }
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupLocator();
-  setupDialogUi();
-  setupBottomSheetUi();
+  await initServices();
   runApp(const MainApp());
 }
 
