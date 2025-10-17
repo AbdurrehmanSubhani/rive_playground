@@ -14,7 +14,6 @@ Future<void> initServices() async {
     await RiveNative.init();
   } catch (e) {
     print('Error initializing services: $e');
-    rethrow;
   }
 }
 

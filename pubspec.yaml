@@ -9,7 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rive: ^0.14.0-dev.6
+  logger: ^1.4.0
+  rive: 0.14.0-dev.8
   stacked: ^3.4.0
   stacked_services: ^1.1.0
 
@@ -24,3 +25,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/riv/

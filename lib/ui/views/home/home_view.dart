@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 import 'package:stacked/stacked.dart';
-import 'package:rive_playground/ui/common/app_colors.dart';
-import 'package:rive_playground/ui/common/ui_helpers.dart';
 
 import 'home_viewmodel.dart';
 
@@ -11,64 +10,31 @@ class HomeView extends StackedView<HomeViewModel> {
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                verticalSpaceLarge,
-                Column(
-                  children: [
-                    const Text(
-                      'Hello, STACKED!',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    verticalSpaceMedium,
-                    MaterialButton(
-                      color: Colors.black,
-                      onPressed: viewModel.incrementCounter,
-                      child: Text(
-                        viewModel.counterLabel,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showDialog,
-                      child: const Text(
-                        'Show Dialog',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showBottomSheet,
-                      child: const Text(
-                        'Show Bottom Sheet',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+      body: viewModel.isBusy
+          ? const Center(child: CircularProgressIndicator.adaptive())
+          : RiveWidgetBuilder(
+              fileLoader: viewModel.fileLoader,
+              builder: (context, state) => switch (state) {
+                RiveLoading() =>
+                  const Center(child: CircularProgressIndicator()),
+                RiveFailed() => ErrorWidget.withDetails(
+                    message: state.error.toString(),
+                    error: FlutterError(state.error.toString()),
+                  ),
+                RiveLoaded() => RiveWidget(
+                    controller: state.controller,
+                    fit: Fit.cover,
+                  )
+              },
             ),
-          ),
-        ),
-      ),
     );
   }
 
   @override
   HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
+
+  @override
+  void onViewModelReady(HomeViewModel viewModel) {
+    viewModel.initRiveControllerWithTestArt();
+  }
 }

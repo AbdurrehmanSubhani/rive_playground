@@ -1,36 +1,24 @@
-import 'package:rive_playground/app/app.bottomsheets.dart';
-import 'package:rive_playground/app/app.dialogs.dart';
-import 'package:rive_playground/app/app.locator.dart';
-import 'package:rive_playground/ui/common/app_strings.dart';
+import 'package:rive/rive.dart';
+import 'package:rive_playground/constants.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final _dialogService = locator<DialogService>();
-  final _bottomSheetService = locator<BottomSheetService>();
+  late FileLoader fileLoader;
+  late File file;
 
-  String get counterLabel => 'Counter is: $_counter';
-
-  int _counter = 0;
-
-  void incrementCounter() {
-    _counter++;
-    rebuildUi();
-  }
-
-  void showDialog() {
-    _dialogService.showCustomDialog(
-      variant: DialogType.infoAlert,
-      title: 'Stacked Rocks!',
-      description: 'Give stacked $_counter stars on Github',
-    );
-  }
-
-  void showBottomSheet() {
-    _bottomSheetService.showCustomSheet(
-      variant: BottomSheetType.notice,
-      title: ksHomeBottomSheetTitle,
-      description: ksHomeBottomSheetDescription,
-    );
+  void initRiveControllerWithTestArt() async {
+    try {
+      setBusy(true);
+      fileLoader = FileLoader.fromAsset(
+        riveAnimationPath,
+        riveFactory: Factory.rive,
+      );
+      logger.i('Test Rive controller initialized');
+    } catch (e) {
+      print('Error initializing Rive controller: $e');
+      throw Exception('Failed to initialize Rive controller $e');
+    } finally {
+      setBusy(false);
+    }
   }
 }

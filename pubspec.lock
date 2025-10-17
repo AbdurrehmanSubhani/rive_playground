@@ -361,7 +361,7 @@ packages:
     source: hosted
     version: "2.1.1"
   logger:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logger
       sha256: "7ad7215c15420a102ec687bb320a7312afd449bac63bfb1c60d9787c27b9767f"
@@ -492,18 +492,18 @@ packages:
     dependency: "direct main"
     description:
       name: rive
-      sha256: "7fb6efeae1e105d7231cf8fd6ad99ec33369c0c8285d19a299af43acf34065b8"
+      sha256: "78d4d7014a30fd69b1c0802d77fbeb621ecdf043eec3a412ee54d6a5945aa92a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.0-dev.11"
+    version: "0.14.0-dev.8"
   rive_native:
     dependency: transitive
     description:
       name: rive_native
-      sha256: "9458cbc8e31184b05b1b091030a7ad50c46c8473da54f7e8f197298166c5397e"
+      sha256: b63bee17e27616b49d113998a982866dab9449f0726f7c78fe4028e361c3c6b0
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.14"
+    version: "0.0.11"
   shelf:
     dependency: transitive
     description:
